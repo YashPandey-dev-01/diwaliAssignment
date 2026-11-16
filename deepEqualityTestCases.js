@@ -44,8 +44,8 @@ const testData = [
     title: "if object is identical"
   },
   {
-    input1: { a: 2 },
-    input2: { b: 2 },
+    input1: { a: 2, x: 6 },
+    input2: { a: 2, y: 5 },
     expected: false,
     title: "if object is not identical"
   },
@@ -61,6 +61,19 @@ const testData = [
     expected: true,
     title: "nested objects(object has same identical nested object)"
   },
+  {
+    input1: { 0: "a", 1: "b" },
+    input2: ["a", "b"],
+    expected: false,
+    title: "object and array with same property name and value"
+  },
+  // {
+  //   input1: null,
+  //   input2: null,
+  //   expected: true,
+  //   title: "null values"
+  // },
+
 ]
 
 for (const data of testData) {

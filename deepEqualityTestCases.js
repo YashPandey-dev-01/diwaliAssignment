@@ -67,13 +67,30 @@ const testData = [
     expected: false,
     title: "object and array with same property name and value"
   },
-  // {
-  //   input1: null,
-  //   input2: null,
-  //   expected: true,
-  //   title: "null values"
-  // },
-
+  {
+    input1: { a: undefined },
+    input2: { b: 1 },
+    expected: false,
+    title: "handle undefined bug"
+  },
+  {
+    input1: { a: undefined },
+    input2: { b: 1 },
+    expected: false,
+    title: "handle undefined bug"
+  },
+  {
+    input1: null,
+    input2: { a: 2, b: 5 },
+    expected: true,
+    title: "handle null values"
+  },
+  {
+    input1: NaN,
+    input2: NaN,
+    expected: false,
+    title: "handle NaN values"
+  },
 ]
 
 for (const data of testData) {

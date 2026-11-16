@@ -44,4 +44,8 @@ function isEqual(input1, input2) {
 
 const input1 = { 0: 2, 1: 4 };
 const input2 = [2, 4];
-console.log(isEqual(input1, input2));
+// console.log(isEqual(input1, input2));
+
+module.exports = {
+  isEqual
+}

@@ -1,7 +1,12 @@
+function getDataType(input) {
+  if (input === null) return 'null';
+  if (Array.isArray(input)) return 'array';
+  if (typeof (input) === 'object') return 'object';
 
+  return 'primitive';
+}
 
 function areObjectsEqual(input1, input2) {
-
   if (Object.keys(input1).length !== Object.keys(input2).length) {
     return false;
   }
@@ -20,19 +25,16 @@ function areObjectsEqual(input1, input2) {
 }
 
 function isEqual(input1, input2) {
-  if (typeof (input1) !== typeof (input2)) {
-    return false;
+  const input1Type = getDataType(input1);
+  const input2Type = getDataType(input2);
+
+  if (input1Type !== input2Type) return false;
+
+  if (input1Type === 'primitive' || input1Type === 'null') {
+    return input1 === input2;
   }
 
-  if (typeof (input1) === "object") {
-
-    if (!(Array.isArray(input1) ^ Array.isArray(input2))) {
-      return areObjectsEqual(input1, input2);
-    }
-
-  }
-
-  return input1 === input2;
+  return areObjectsEqual(input1, input2);
 }
 
 module.exports = {

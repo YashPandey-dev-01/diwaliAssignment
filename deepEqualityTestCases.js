@@ -81,9 +81,21 @@ const testData = [
   },
   {
     input1: null,
-    input2: { a: 2, b: 5 },
+    input2: null,
     expected: true,
     title: "handle null values"
+  },
+  {
+    input1: null,
+    input2: { a: 3, b: 4 },
+    expected: false,
+    title: "one input is object another is NULL"
+  },
+  {
+    input1: null,
+    input2: [3, 4],
+    expected: false,
+    title: "one input is array another is NULL"
   },
   {
     input1: NaN,

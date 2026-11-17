@@ -1,108 +1,8 @@
 const d = require("./deepEquality");
 
-const testData = [
-  {
-    input1: 1,
-    input2: 1,
-    expected: true,
-    title: "if primitive value are same"
-  },
-  {
-    input1: "hello",
-    input2: "hi",
-    expected: false,
-    title: "if primitive value are different"
-  },
-  {
-    input1: [],
-    input2: [],
-    expected: true,
-    title: "if both input are empty array"
-  },
-  {
-    input1: [2, 3],
-    input2: [2, 3],
-    expected: true,
-    title: "if array data is same"
-  },
-  {
-    input1: [2],
-    input2: [2, 3],
-    expected: false,
-    title: "if array data is not same"
-  },
-  {
-    input1: "1",
-    input2: 1,
-    expected: false,
-    title: "if same primitive data is in integer and another in string"
-  },
-  {
-    input1: { a: 1, b: 2 },
-    input2: { a: 1, b: 2 },
-    expected: true,
-    title: "if object is identical"
-  },
-  {
-    input1: { a: 2, x: 6 },
-    input2: { a: 2, y: 5 },
-    expected: false,
-    title: "if object is not identical"
-  },
-
-  {
-    input1: { a: { b: 1 } },
-    input2: { a: { b: 1 } },
-    expected: true,
-    title: "nested objects(object has same identical nested object)"
-  },
-  {
-    input1: { 0: "a", 1: "b" },
-    input2: ["a", "b"],
-    expected: false,
-    title: "object and array with same property name and value"
-  },
-  {
-    input1: { a: undefined },
-    input2: { b: 1 },
-    expected: false,
-    title: "handle undefined bug"
-  },
-  {
-    input1: { a: undefined },
-    input2: { b: 1 },
-    expected: false,
-    title: "handle undefined bug"
-  },
-  {
-    input1: null,
-    input2: null,
-    expected: true,
-    title: "handle null values"
-  },
-  {
-    input1: null,
-    input2: { a: 3, b: 4 },
-    expected: false,
-    title: "one input is object another is NULL"
-  },
-  {
-    input1: null,
-    input2: [3, 4],
-    expected: false,
-    title: "one input is array another is NULL"
-  },
-  {
-    input1: NaN,
-    input2: NaN,
-    expected: false,
-    title: "handle NaN values"
-  },
-]
-
-for (const data of testData) {
-  console.log(data.title);
-  if (data.expected === d.isEqual(data.input1, data.input2)) {
+function test(message, expected, input1, input2) {
+  console.log(message);
+  if (expected === d.isEqual(input1, input2)) {
     console.log("correct ✅");
   }
   else {
@@ -110,3 +10,29 @@ for (const data of testData) {
   }
   console.log("------------------------------------");
 }
+
+test("Two same integars are equal", true, 1, 1);
+test("Two different integars are unequal", false, 3, 7);
+
+test("Two similar strings are equal", true, "hello", "hello");
+test("Two different strings are unequal", false, "hello", "hi");
+
+test("Two empty arrays are equal", true, [], []);
+test("Two arrays having same length are unequal", false, [2], [3, 4]);
+test("Two arrays having same length and different data are unequal", false, [3, 4], [4, 4]);
+
+test("Same numeric and string data are unequal", false, "1", 1);
+
+test("Identical objects are equal", true, { a: 1, b: 2 }, { a: 1, b: 2 });
+test("Unidentical objects are unequal", false, { a: 5, b: 2 }, { a: 1, b: 2 });
+test("Identical nested objects are equal", true, { a: { b: 1 } }, { a: { b: 1 } });
+test("Unidentical nested objects are unequal", false, { a: { b: 1 } }, { a: { b: 4 } });
+test("If Object length are equal but have different property,they are unequal", false, { a: undefined }, { b: 1 });
+
+test("Object and array with same property name and value are unequal", false, { 0: "a", 1: "b" }, ["a", "b"]);
+
+test("If both inputs are undefined, they are equal", true, undefined, undefined);
+test("If both inputs are NULL, they are equal", true, null, null);
+test("If both inputs are NaN, they are equal", true, NaN, NaN);
+
+

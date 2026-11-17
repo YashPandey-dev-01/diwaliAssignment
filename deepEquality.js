@@ -1,7 +1,7 @@
 function getDataType(input) {
   if (input === null) return 'null';
   if (Array.isArray(input)) return 'array';
-  if (input === NaN) return 'NaN';
+  if (Number.isNaN(input)) return 'NaN';
 
   return typeof (input);
 }
@@ -40,6 +40,8 @@ function isEqual(input1, input2) {
       return areObjectsEqual(input1, input2);
     case 'object':
       return areObjectsEqual(input1, input2);
+    case 'NaN':
+      return true;
     default:
       return areValuesEqual(input1, input2);
   }

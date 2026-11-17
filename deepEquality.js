@@ -1,9 +1,9 @@
 function getDataType(input) {
   if (input === null) return 'null';
   if (Array.isArray(input)) return 'array';
-  if (typeof (input) === 'object') return 'object';
+  if (input === NaN) return 'NaN';
 
-  return 'primitive';
+  return typeof (input);
 }
 
 function areObjectsEqual(input1, input2) {
@@ -24,17 +24,25 @@ function areObjectsEqual(input1, input2) {
   return true;
 }
 
+function areValuesEqual(value1, value2) {
+  return value1 === value2;
+}
+
+function isTypeEqual(input1, input2) {
+  return getDataType(input1) === getDataType(input2);
+}
+
 function isEqual(input1, input2) {
-  const input1Type = getDataType(input1);
-  const input2Type = getDataType(input2);
+  if (!isTypeEqual(input1, input2)) return false;
 
-  if (input1Type !== input2Type) return false;
-
-  if (input1Type === 'primitive' || input1Type === 'null') {
-    return input1 === input2;
+  switch (getDataType(input1)) {
+    case 'array':
+      return areObjectsEqual(input1, input2);
+    case 'object':
+      return areObjectsEqual(input1, input2);
+    default:
+      return areValuesEqual(input1, input2);
   }
-
-  return areObjectsEqual(input1, input2);
 }
 
 module.exports = {

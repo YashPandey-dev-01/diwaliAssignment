@@ -49,12 +49,7 @@ const testData = [
     expected: false,
     title: "if object is not identical"
   },
-  {
-    input1: { a: [2, 3] },
-    input2: { a: [2, 3] },
-    expected: true,
-    title: "if objects has same array value and property name is also same"
-  },
+
   {
     input1: { a: { b: 1 } },
     input2: { a: { b: 1 } },

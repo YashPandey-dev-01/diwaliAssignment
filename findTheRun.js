@@ -1,52 +1,30 @@
-function toggleSequenceType(sequenceType) {
-  return sequenceType === "increasing" ? "decreasing" : "increasing";
-}
-
-function findSequenceType(prevElement, currElement) {
-  return prevElement < currElement ? "increasing" : "decreasing";
-}
-
-function findRun(array) {
-  if (array.length === 0) {
-    return [];
+const isElementBelongsToRun = function (run, element) {
+  if (run.length < 2) {
+    return true;
   }
 
-  const sequences = [[]];
-  let row = 0;
-  let column = 0;
-  let sequenceType = undefined;
-  let currSequenceType = undefined;
+  const d1 = Math.sign(element - run.at(-1));
+  const d2 = Math.sign(run.at(-1) - run.at(-2));
 
-  sequences[row][column] = array[0];
+  if (d1 + d2 === 1) return true;
 
-  for (let idx = 1; idx < array.length; idx++) {
-    if (array[idx] === array[idx - 1]) {
-      column++;
-      sequences[row][column] = array[idx];
-    } else {
-      sequenceType = findSequenceType(array[idx - 1], array[idx]);
+  return d1 === d2;
+}
 
-      if (currSequenceType === undefined) {
-        currSequenceType = sequenceType;
-      }
+const findRun = function (arr) {
+  const runs = [[]];
 
-      if (currSequenceType === sequenceType) {
-        column++;
-        sequences[row][column] = array[idx];
-      }
-      else {
-        row++;
-        column = 0;
-        sequences[row] = [];
-        sequences[row][column] = array[idx];
-        currSequenceType = toggleSequenceType(currSequenceType);
-      }
+  for (const element of arr) {
+    if (!isElementBelongsToRun(runs.at(-1), element)) {
+      runs.push([]);
     }
+
+    runs.at(-1).push(element);
   }
 
-  return sequences;
+  return runs;
 }
 
-console.log(findRun([]));
-console.log(findRun([4, 4, 4, 4]));
-console.log(findRun([4, 5, 8, 0, 1, 2, 0, 1, 2, 3, 4, 4, 4, 4, 3, - 1, -2, -3]));
+module.exports = {
+  findRun
+}
